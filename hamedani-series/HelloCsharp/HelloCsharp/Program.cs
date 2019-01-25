@@ -96,6 +96,15 @@ namespace HelloCsharp
 
             Calculator calculator = new Calculator();
             Console.WriteLine("Calculator result: " + calculator.Add(1, 2));
+
+            // arrays
+            int[] myIntArray = new int[3]; // ints default value are 0.  another example is that bools are initialized to false.
+            var anotherIntArray = new int[3];
+
+            var names = new string[] { "Jack", "John", "Mary" };
+            Console.WriteLine("first name " + names[0]);
+            Console.WriteLine("second name " + names[1]);
+            Console.WriteLine("third name " + names[2]);
         }
     }
 }
