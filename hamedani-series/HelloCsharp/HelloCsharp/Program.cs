@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelloCsharp.Math;
+using System;
 
 namespace HelloCsharp
 {
@@ -7,8 +8,6 @@ namespace HelloCsharp
         // const vs normal variables
         private const string Value = "Hello World!";
         string OtherValue = "Hello There!";
-
-
 
         static void Main(string[] args)
         {
@@ -88,6 +87,15 @@ namespace HelloCsharp
             /*
              * multiline comments (not very common)
             */
+
+            // classes
+            Person john = new Person();
+            john.FirstName = "John";
+            john.LastName = "Smith";
+            john.Introduce();
+
+            Calculator calculator = new Calculator();
+            Console.WriteLine("Calculator result: " + calculator.Add(1, 2));
         }
     }
 }
