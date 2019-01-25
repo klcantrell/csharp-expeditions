@@ -84,6 +84,10 @@ namespace HelloCsharp
                 Console.WriteLine("Hey, that didn't work out.  Number could not be converted" +
                     "to a byte");
             }
+
+            /*
+             * multiline comments (not very common)
+            */
         }
     }
 }
