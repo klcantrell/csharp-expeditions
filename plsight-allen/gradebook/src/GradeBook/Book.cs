@@ -30,9 +30,16 @@ namespace GradeBook
 
         public void AddGrade(double grade)
         {
-            HighGrade = Math.Max(grade, highGrade);
-            LowGrade = Math.Min(grade, lowGrade);
-            grades.Add(grade);
+            if (grade <= 100 && grade >= 0)
+            {
+                HighGrade = Math.Max(grade, highGrade);
+                LowGrade = Math.Min(grade, lowGrade);
+                grades.Add(grade);
+            }
+            else
+            {
+                Console.WriteLine("Invalid value");
+            }
         }
 
         public double ComputeAverage()
@@ -55,8 +62,8 @@ namespace GradeBook
         {
             var average = ComputeAverage();
             var result = new Statistics();
-            result.Low = lowGrade;
-            result.High = highGrade;
+            result.Low = LowGrade;
+            result.High = HighGrade;
             result.Average = average;
             return result;
         }

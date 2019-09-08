@@ -18,5 +18,26 @@ namespace GradeBook.Tests
             Assert.Equal(77.3, result.Low, 1);
             Assert.Equal(85.6, result.Average, 1);
         }
+
+        [Fact]
+        public void DoesNotAddGradesOutsideOfAcceptableRange()
+        {
+            Statistics result;
+            var book = new Book("");
+
+            book.AddGrade(200.0);
+            result = book.GetStatistics();
+
+            Assert.Equal(0.0, result.High, 1);
+            Assert.Equal(0.0, result.Low, 1);
+            Assert.Equal(0.0, result.Average, 1);
+
+            book.AddGrade(-200.00);
+            result = book.GetStatistics();
+
+            Assert.Equal(0.0, result.High, 1);
+            Assert.Equal(0.0, result.Low, 1);
+            Assert.Equal(0.0, result.Average, 1);
+        }
     }
 }
