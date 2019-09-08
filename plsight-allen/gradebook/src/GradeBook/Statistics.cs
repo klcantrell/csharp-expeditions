@@ -17,5 +17,11 @@ namespace GradeBook
             get;
             internal set;
         }
+
+        public char Letter
+        {
+            get;
+            internal set;
+        }
     }
 }

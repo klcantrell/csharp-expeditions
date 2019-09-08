@@ -5,20 +5,25 @@ namespace GradeBook
 {
     public class Book
     {
+        public string Name;
+        public int Length
+        {
+            get => grades.Count;
+        }
         private List<double> grades;
         private double highGrade;
         private double lowGrade;
-        public double HighGrade
+        private double HighGrade
         {
             get => highGrade == double.MinValue ? 0.0 : highGrade;
-            private set => highGrade = value;
+            set => highGrade = value;
         }
-        public string Name;
-        public double LowGrade
+        private double LowGrade
         {
             get => lowGrade == double.MaxValue ? 0.0 : lowGrade;
-            private set => lowGrade = value;
+            set => lowGrade = value;
         }
+        private char LetterGrade;
 
         public Book(string name)
         {
@@ -26,6 +31,32 @@ namespace GradeBook
             this.grades = new List<double>();
             this.highGrade = double.MinValue;
             this.lowGrade = double.MaxValue;
+        }
+
+        public void AddLetterGrade(char letter)
+        {
+            switch (letter)
+            {
+                case 'A':
+                    AddGrade(90.0);
+                    break;
+
+                case 'B':
+                    AddGrade(80.0);
+                    break;
+
+                case 'C':
+                    AddGrade(70.0);
+                    break;
+
+                case 'D':
+                    AddGrade(60.0);
+                    break;
+
+                default:
+                    AddGrade(0.0);
+                    break;
+            }
         }
 
         public void AddGrade(double grade)
@@ -38,7 +69,7 @@ namespace GradeBook
             }
             else
             {
-                Console.WriteLine("Invalid value");
+                throw new ArgumentException($"Invalid {nameof(grade)}");
             }
         }
 
@@ -55,6 +86,26 @@ namespace GradeBook
                 result += grade;
             }
             result /= grades.Count;
+
+            switch (result)
+            {
+                case var d when d >= 90.0:
+                    LetterGrade = 'A';
+                    break;
+                case var d when d >= 80.0:
+                    LetterGrade = 'B';
+                    break;
+                case var d when d >= 70.0:
+                    LetterGrade = 'C';
+                    break;
+                case var d when d >= 60.0:
+                    LetterGrade = 'D';
+                    break;
+                default:
+                    LetterGrade = 'F';
+                    break;
+            }
+
             return result;
         }
 
@@ -62,6 +113,7 @@ namespace GradeBook
         {
             var average = ComputeAverage();
             var result = new Statistics();
+            result.Letter = LetterGrade;
             result.Low = LowGrade;
             result.High = HighGrade;
             result.Average = average;
