@@ -13,14 +13,16 @@ namespace GradeBook
             get => highGrade == double.MinValue ? 0.0 : highGrade;
             private set => highGrade = value;
         }
+        public string Name;
         public double LowGrade
         {
             get => lowGrade == double.MaxValue ? 0.0 : lowGrade;
             private set => lowGrade = value;
         }
 
-        public Book()
+        public Book(string name)
         {
+            Name = name;
             this.grades = new List<double>();
             this.highGrade = double.MinValue;
             this.lowGrade = double.MaxValue;
