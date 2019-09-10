@@ -6,7 +6,7 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-            var book = new Book("");
+            var book = new Book("Kal's gradebook", "Science");
             Statistics stats;
             Console.WriteLine("Let's calculate grade stats.");
 
@@ -33,13 +33,14 @@ namespace GradeBook
                 }
                 finally
                 {
-                    Console.WriteLine("Let's try that again...");
+                    Console.WriteLine("Let's do it again...");
                 }
             }
 
             if (book.Length > 0)
             {
                 stats = book.GetStatistics();
+                Console.WriteLine($"The Awesome {book.Category} book of {book.Name}");
                 Console.WriteLine($"Average is {stats.Average:N2}");
                 Console.WriteLine($"High Grade is {stats.High:N2}");
                 Console.WriteLine($"Low Grade is {stats.Low:N2}");

@@ -5,6 +5,8 @@ namespace GradeBook
 {
     public class Book
     {
+        public const string DEVELOPER = "Kal";
+        public readonly string Category;
         public string Name;
         public int Length
         {
@@ -25,9 +27,10 @@ namespace GradeBook
         }
         private char LetterGrade;
 
-        public Book(string name)
+        public Book(string name, string category)
         {
             Name = name;
+            Category = category;
             this.grades = new List<double>();
             this.highGrade = double.MinValue;
             this.lowGrade = double.MaxValue;

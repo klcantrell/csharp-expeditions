@@ -87,13 +87,13 @@ namespace GradeBook.Tests
 
         private void GetBookSetName(Book book, string name)
         {
-            book = new Book(name);
+            book = new Book(name, "");
             book.Name = name;
         }
 
         private void RefGetBookSetName(ref Book book, string name)
         {
-            book = new Book(name);
+            book = new Book(name, "");
             book.Name = name;
         }
 
@@ -120,7 +120,7 @@ namespace GradeBook.Tests
 
         private Book GetBook(string name)
         {
-            return new Book(name);
+            return new Book(name, "");
         }
     }
 }
