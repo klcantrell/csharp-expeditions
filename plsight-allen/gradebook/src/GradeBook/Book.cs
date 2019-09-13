@@ -5,11 +5,24 @@ namespace GradeBook
 {
     public delegate void GradeAddedDelegate(object sender, EventArgs args);
 
-    public class Book
+    public class NamedObject
+    {
+        public NamedObject(string name)
+        {
+            Name = name;
+        }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+    }
+
+    public class Book : NamedObject
     {
         public const string DEVELOPER = "Kal";
         public readonly string Category;
-        public string Name;
         public int Length
         {
             get => grades.Count;
@@ -29,7 +42,7 @@ namespace GradeBook
         }
         private char LetterGrade;
 
-        public Book(string name, string category)
+        public Book(string name, string category) : base(name)
         {
             Name = name;
             Category = category;
