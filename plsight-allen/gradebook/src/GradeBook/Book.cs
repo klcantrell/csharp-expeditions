@@ -19,7 +19,16 @@ namespace GradeBook
         }
     }
 
-    public class Book : NamedObject
+    public abstract class Book : NamedObject
+    {
+        public Book(string name) : base(name)
+        {
+        }
+
+        public abstract void AddGrade(double grade);
+    }
+
+    public class InMemoryBook : Book
     {
         public const string DEVELOPER = "Kal";
         public readonly string Category;
@@ -42,7 +51,7 @@ namespace GradeBook
         }
         private char LetterGrade;
 
-        public Book(string name, string category) : base(name)
+        public InMemoryBook(string name, string category) : base(name)
         {
             Name = name;
             Category = category;
@@ -77,7 +86,7 @@ namespace GradeBook
             }
         }
 
-        public void AddGrade(double grade)
+        public override void AddGrade(double grade)
         {
             if (grade <= 100 && grade >= 0)
             {
