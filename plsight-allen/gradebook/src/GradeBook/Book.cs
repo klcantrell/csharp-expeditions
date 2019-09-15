@@ -17,47 +17,24 @@ namespace GradeBook
             get;
             set;
         }
+
     }
 
-    public abstract class Book : NamedObject
+    public interface IBook
     {
-        public Book(string name) : base(name)
-        {
-        }
+        void AddGrade(double grade);
+        Statistics GetStatistics();
+        string Name { get; }
+        string Category { get; }
+        int Length { get; }
+        event GradeAddedDelegate GradeAdded;
 
-        public abstract void AddGrade(double grade);
     }
 
-    public class InMemoryBook : Book
+    public abstract class Book : NamedObject, IBook
     {
-        public const string DEVELOPER = "Kal";
-        public readonly string Category;
-        public int Length
+        public Book(string name, string category) : base(name)
         {
-            get => grades.Count;
-        }
-        private List<double> grades;
-        private double highGrade;
-        private double lowGrade;
-        private double HighGrade
-        {
-            get => highGrade == double.MinValue ? 0.0 : highGrade;
-            set => highGrade = value;
-        }
-        private double LowGrade
-        {
-            get => lowGrade == double.MaxValue ? 0.0 : lowGrade;
-            set => lowGrade = value;
-        }
-        private char LetterGrade;
-
-        public InMemoryBook(string name, string category) : base(name)
-        {
-            Name = name;
-            Category = category;
-            this.grades = new List<double>();
-            this.highGrade = double.MinValue;
-            this.lowGrade = double.MaxValue;
         }
 
         public void AddLetterGrade(char letter)
@@ -86,13 +63,51 @@ namespace GradeBook
             }
         }
 
+        public abstract event GradeAddedDelegate GradeAdded;
+
+        public abstract void AddGrade(double grade);
+
+        public abstract Statistics GetStatistics();
+
+        public abstract string Category
+        {
+            get;
+        }
+
+        public abstract int Length
+        {
+            get;
+        }
+    }
+
+    public class InMemoryBook : Book
+    {
+        public const string DEVELOPER = "Kal";
+        public override int Length
+        {
+            get => grades.Count;
+        }
+        public override string Category
+        {
+            get;
+        }
+        private List<double> grades;
+        private Statistics stats;
+
+        public InMemoryBook(string name, string category) : base(name, category)
+        {
+            Category = category;
+            this.grades = new List<double>();
+            this.stats = new Statistics();
+        }
+
+
         public override void AddGrade(double grade)
         {
             if (grade <= 100 && grade >= 0)
             {
-                HighGrade = Math.Max(grade, highGrade);
-                LowGrade = Math.Min(grade, lowGrade);
                 grades.Add(grade);
+                stats.UpdateStats(grade, grades);
                 if (GradeAdded != null)
                 {
                     GradeAdded(this, new EventArgs());
@@ -104,53 +119,12 @@ namespace GradeBook
             }
         }
 
-        public event GradeAddedDelegate GradeAdded;
+        public override event GradeAddedDelegate GradeAdded;
 
-        public double ComputeAverage()
+
+        public override Statistics GetStatistics()
         {
-            if (grades.Count == 0)
-            {
-                return 0.0;
-            }
-
-            var result = 0.0;
-            foreach (var grade in grades)
-            {
-                result += grade;
-            }
-            result /= grades.Count;
-
-            switch (result)
-            {
-                case var d when d >= 90.0:
-                    LetterGrade = 'A';
-                    break;
-                case var d when d >= 80.0:
-                    LetterGrade = 'B';
-                    break;
-                case var d when d >= 70.0:
-                    LetterGrade = 'C';
-                    break;
-                case var d when d >= 60.0:
-                    LetterGrade = 'D';
-                    break;
-                default:
-                    LetterGrade = 'F';
-                    break;
-            }
-
-            return result;
-        }
-
-        public Statistics GetStatistics()
-        {
-            var average = ComputeAverage();
-            var result = new Statistics();
-            result.Letter = LetterGrade;
-            result.Low = LowGrade;
-            result.High = HighGrade;
-            result.Average = average;
-            return result;
+            return stats;
         }
     }
 }

@@ -15,10 +15,10 @@ namespace GradeBook.Tests
 
             var result = book.GetStatistics();
 
-            Assert.Equal(90.5, result.High, 1);
-            Assert.Equal(77.3, result.Low, 1);
-            Assert.Equal(85.6, result.Average, 1);
-            Assert.Equal('B', result.Letter);
+            Assert.Equal(90.5, result.HighGrade, 1);
+            Assert.Equal(77.3, result.LowGrade, 1);
+            Assert.Equal(85.6, result.AverageGrade, 1);
+            Assert.Equal('B', result.LetterGrade);
         }
 
         [Fact]

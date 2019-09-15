@@ -6,22 +6,21 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-            var book = new InMemoryBook("Kal's gradebook", "Science");
+            var book = new DiskBook("Kal's gradebook", "Science");
             book.GradeAdded += OnGradeAdded;
             book.GradeAdded += OnGradeAdded;
-            Statistics stats;
             Console.WriteLine("Let's calculate grade stats.");
 
             EnterGrades(book);
 
             if (book.Length > 0)
             {
-                stats = book.GetStatistics();
+                Statistics stats = book.GetStatistics();
                 Console.WriteLine($"The Awesome {book.Category} book of {book.Name}");
-                Console.WriteLine($"Average is {stats.Average:N2}");
-                Console.WriteLine($"High Grade is {stats.High:N2}");
-                Console.WriteLine($"Low Grade is {stats.Low:N2}");
-                Console.WriteLine($"Letter Grade is {stats.Letter}");
+                Console.WriteLine($"Average is {stats.AverageGrade:N2}");
+                Console.WriteLine($"High Grade is {stats.HighGrade:N2}");
+                Console.WriteLine($"Low Grade is {stats.LowGrade:N2}");
+                Console.WriteLine($"Letter Grade is {stats.LetterGrade}");
             }
             else
             {
@@ -29,7 +28,7 @@ namespace GradeBook
             }
         }
 
-        private static void EnterGrades(Book book)
+        private static void EnterGrades(IBook book)
         {
             while (true)
             {
