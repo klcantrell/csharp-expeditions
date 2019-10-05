@@ -14,18 +14,30 @@ namespace FuelEfficiency
 
             var query =
                 from car in cars
-                where car.Manufacturer == "BMW" && car.Year == 2016
+                join manufacturer in manufacturers
+                    on car.Manufacturer equals manufacturer.Name
                 orderby car.Combined descending, car.Name
-                select car;
+                select new
+                {
+                    manufacturer.Headquarters,
+                    car.Name,
+                    car.Combined,
+                };
 
-            var result = cars.SelectMany(c => c.Name)
-                             .OrderBy(c => c);
+            var query2 =
+                cars.Join(manufacturers, c => c.Manufacturer, m => m.Name, (c, m) => new
+                {
+                    m.Headquarters,
+                    c.Name,
+                    c.Combined
+                })
+                .OrderByDescending(c => c.Combined)
+                .ThenBy(c => c.Name);
 
-            foreach (var character in result)
+            foreach (var car in query2.Take(10))
             {
-                Console.WriteLine(character);
+                Console.WriteLine($"{car.Headquarters} {car.Name} : {car.Combined}");
             }
-
         }
 
         private static List<Car> ProcessCars(string path)
