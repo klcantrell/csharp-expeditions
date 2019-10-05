@@ -9,10 +9,8 @@ namespace FuelEfficiency
     {
         static void Main(string[] args)
         {
-            var cars = ProcessFile("fuel.csv");
-            //var query = cars
-            //    .OrderByDescending(c => c.Combined)
-            //    .ThenBy(c => c.Name);
+            var cars = ProcessCars("fuel.csv");
+            var manufacturers = ProcessManufacturers("manufacturers.csv");
 
             var query =
                 from car in cars
@@ -28,13 +26,9 @@ namespace FuelEfficiency
                 Console.WriteLine(character);
             }
 
-            //foreach (var car in query.Take(10))
-            //{
-            //    Console.WriteLine($"{car.Name} : {car.City}");
-            //}
         }
 
-        private static List<Car> ProcessFile(string path)
+        private static List<Car> ProcessCars(string path)
         {
             var query =
                 File.ReadAllLines(path)
@@ -42,9 +36,15 @@ namespace FuelEfficiency
                     .Where(l => l.Length > 1)
                     .ToCar();
 
-            //from line in File.ReadAllLines(path).Skip(1)
-            //where line.Length > 1
-            //select Car.ParseFromCsv(line);
+            return query.ToList();
+        }
+        private static List<Manufacturer> ProcessManufacturers(string path)
+        {
+            var query =
+                File.ReadAllLines(path)
+                    .Where(l => l.Length > 1)
+                    .ToManufacturer();
+
             return query.ToList();
         }
     }
@@ -65,7 +65,21 @@ namespace FuelEfficiency
                     Cylinders = int.Parse(columns[4]),
                     City = int.Parse(columns[5]),
                     Highway = int.Parse(columns[6]),
-                    Combined = int.Parse(columns[7])
+                    Combined = int.Parse(columns[7]),
+                };
+            }
+        }
+
+        public static IEnumerable<Manufacturer> ToManufacturer(this IEnumerable<string> source)
+        {
+            foreach (var line in source)
+            {
+                var columns = line.Split(',');
+                yield return new Manufacturer
+                {
+                    Name = columns[0],
+                    Headquarters = columns[1],
+                    Year = int.Parse(columns[2]),
                 };
             }
         }
