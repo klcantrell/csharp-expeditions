@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Xml.Linq;
 
 namespace FuelEfficiency
 {
@@ -9,46 +10,23 @@ namespace FuelEfficiency
     {
         static void Main(string[] args)
         {
-            var cars = ProcessCars("fuel.csv");
-            var manufacturers = ProcessManufacturers("manufacturers.csv");
+            var records = ProcessCars("fuel.csv");
 
-            var query =
-                from car in cars
-                group car by car.Manufacturer into carGroup
-                select new
-                {
-                    Name = carGroup.Key,
-                    Max = carGroup.Max(c => c.Combined),
-                    Min = carGroup.Min(c => c.Combined),
-                    Avg = carGroup.Average(c => c.Combined),
-                } into result
-                orderby result.Max descending
-                select result;
+            var document = new XDocument();
+            var cars = new XElement("Cars");
 
-            var query2 =
-                cars.GroupBy(c => c.Manufacturer)
-                    .Select(g =>
-                    {
-                        var results = g.Aggregate(new CarStatistics(),
-                            (acc, c) => acc.Accumulate(c),
-                            acc => acc.Compute()
-                            );
-                        return new
-                        {
-                            Name = g.Key,
-                            Avg = results.Average,
-                            Min = results.Min,
-                            Max = results.Max,
-                        };
-                    });
-
-            foreach (var result in query2)
+            foreach (var record in records)
             {
-                Console.WriteLine(result.Name);
-                Console.WriteLine($"\t Max: {result.Max}");
-                Console.WriteLine($"\t Min: {result.Min}");
-                Console.WriteLine($"\t Average: {result.Avg}");
+                var car = new XElement("Car", 
+                    new XAttribute("Name", record.Name), 
+                    new XAttribute("Combined", record.Combined),
+                    new XAttribute("Manufacturer", record.Manufacturer));
+
+                cars.Add(car);
             }
+
+            document.Add(cars);
+            document.Save("fuel.xml");
         }
 
         private static List<Car> ProcessCars(string path)
@@ -70,38 +48,6 @@ namespace FuelEfficiency
 
             return query.ToList();
         }
-    }
-
-    public class CarStatistics
-    {
-        public CarStatistics()
-        {
-            Max = Int32.MinValue;
-            Min = Int32.MaxValue;
-        }
-
-        public CarStatistics Accumulate(Car car)
-        {
-            Count += 1;
-            Total += car.Combined;
-            Max = Math.Max(Max, car.Combined);
-            Min = Math.Min(Min, car.Combined);
-
-            return this;
-        }
-
-        public CarStatistics Compute()
-        {
-            Average = Total / Count;
-            return this;
-        }
-
-        public int Max { get; set; }
-        public int Min { get; set; }
-        public int Total { get; set; }
-        public int Count { get; set; }
-        public int Average { get; set; }
-
     }
 
     public static class CarExtenions
