@@ -11,6 +11,22 @@ namespace FuelEfficiency
         static void Main(string[] args)
         {
             CreateXML();
+            QueryXML();
+        }
+
+        private static void QueryXML()
+        {
+            var document = XDocument.Load("fuel.xml");
+
+            var query =
+                from element in document.Descendants("Car")
+                where element.Attribute("Manufacturer")?.Value == "BMW"
+                select element.Attribute("Name").Value;
+
+            foreach (var name in query)
+            {
+                Console.WriteLine(name);
+            }
         }
 
         private static void CreateXML()
