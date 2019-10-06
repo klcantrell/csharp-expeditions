@@ -10,20 +10,21 @@ namespace FuelEfficiency
     {
         static void Main(string[] args)
         {
+            CreateXML();
+        }
+
+        private static void CreateXML()
+        {
             var records = ProcessCars("fuel.csv");
 
             var document = new XDocument();
-            var cars = new XElement("Cars");
-
-            foreach (var record in records)
-            {
-                var car = new XElement("Car", 
-                    new XAttribute("Name", record.Name), 
+            var cars = new XElement("Cars",
+                from record in records
+                select new XElement("Car",
+                    new XAttribute("Name", record.Name),
                     new XAttribute("Combined", record.Combined),
-                    new XAttribute("Manufacturer", record.Manufacturer));
-
-                cars.Add(car);
-            }
+                    new XAttribute("Manufacturer", record.Manufacturer))
+            );
 
             document.Add(cars);
             document.Save("fuel.xml");
