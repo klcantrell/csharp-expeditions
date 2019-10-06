@@ -17,9 +17,11 @@ namespace FuelEfficiency
         private static void QueryXML()
         {
             var document = XDocument.Load("fuel.xml");
+            var ns = (XNamespace)"http://pluralsight.com/cars/2016";
+            var ex = (XNamespace)"http://pluralsight.com/cars/2016/ex";
 
             var query =
-                from element in document.Descendants("Car")
+                from element in document.Descendants(ex + "Car")
                 where element.Attribute("Manufacturer")?.Value == "BMW"
                 select element.Attribute("Name").Value;
 
@@ -33,14 +35,18 @@ namespace FuelEfficiency
         {
             var records = ProcessCars("fuel.csv");
 
+            var ns = (XNamespace)"http://pluralsight.com/cars/2016";
+            var ex = (XNamespace)"http://pluralsight.com/cars/2016/ex";
             var document = new XDocument();
-            var cars = new XElement("Cars",
+            var cars = new XElement(ns + "Cars",
                 from record in records
-                select new XElement("Car",
+                select new XElement(ex + "Car",
                     new XAttribute("Name", record.Name),
                     new XAttribute("Combined", record.Combined),
                     new XAttribute("Manufacturer", record.Manufacturer))
             );
+
+            cars.Add(new XAttribute(XNamespace.Xmlns + "ex", ex));
 
             document.Add(cars);
             document.Save("fuel.xml");
