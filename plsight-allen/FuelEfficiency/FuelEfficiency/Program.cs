@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Xml.Linq;
+using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace FuelEfficiency
 {
@@ -10,8 +12,45 @@ namespace FuelEfficiency
     {
         static void Main(string[] args)
         {
-            CreateXML();
-            QueryXML();
+            //CreateXML();
+            //QueryXML();
+
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<CarDb>());
+
+            InsertData();
+            QueryData();
+        }
+
+        private static void InsertData()
+        {
+            var cars = ProcessCars("fuel.csv");
+            var db = new CarDb();
+            db.Database.Log = Console.WriteLine;
+
+            if (!db.Cars.Any())
+            {
+                foreach (var car in cars)
+                {
+                    db.Cars.Add(car);
+                }
+                db.SaveChanges();
+            }
+        }
+
+        private static void QueryData()
+        {
+            var db = new CarDb();
+            db.Database.Log = Console.WriteLine;
+
+            var query =
+                from car in db.Cars
+                orderby car.Combined descending, car.Name ascending
+                select car;
+
+            foreach (var car in query.Take(10))
+            {
+                Console.WriteLine($"{car.Name} : {car.Combined}");
+            }
         }
 
         private static void QueryXML()
