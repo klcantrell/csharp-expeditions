@@ -45,11 +45,21 @@ namespace FuelEfficiency
             var query =
                 from car in db.Cars
                 orderby car.Combined descending, car.Name ascending
-                select car;
+                group car by car.Manufacturer into manufacturer
+                select new {
+                    Name = manufacturer.Key,
+                    Cars = (from car in manufacturer
+                            orderby car.Combined descending
+                            select car).Take(2)
+                };
 
-            foreach (var car in query.Take(10))
+            foreach (var group in query)
             {
-                Console.WriteLine($"{car.Name} : {car.Combined}");
+                Console.WriteLine(group.Name);
+                foreach (var car in group.Cars)
+                {
+                    Console.WriteLine($"\t{car.Name} : {car.Combined}");
+                }
             }
         }
 
