@@ -8,7 +8,7 @@ namespace DotnetCoreFundamentals.Data
 {
     public interface IRestaurantData
     {
-        IEnumerable<Restaurant> GetAllRestaurant();
+        IEnumerable<Restaurant> GetAll();
     }
 
     public class InMemoryRestaurantData : IRestaurantData
@@ -25,7 +25,7 @@ namespace DotnetCoreFundamentals.Data
             };
         }
 
-        public IEnumerable<Restaurant> GetAllRestaurant()
+        public IEnumerable<Restaurant> GetAll()
         {
             return from r in restaurants
                    orderby r.Name
