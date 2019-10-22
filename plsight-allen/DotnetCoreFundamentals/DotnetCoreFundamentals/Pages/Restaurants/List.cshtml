@@ -32,6 +32,11 @@
                    asp-route-restaurantId="@restaurant.Id">
                     <i class="fa fa-search-plus"></i>
                 </a>
+                <a class="btn btn-lg"
+                   asp-page="./Edit"
+                   asp-route-restaurantId="@restaurant.Id">
+                    <i class="fa fa-edit"></i>
+                </a>
             </td>
         </tr>
     }
