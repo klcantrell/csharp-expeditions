@@ -8,6 +8,11 @@ namespace DotnetCoreFundamentals.Data
 {
     public class DotnetCoreFundamentalsDbContext : DbContext
     {
+        public DotnetCoreFundamentalsDbContext(DbContextOptions<DotnetCoreFundamentalsDbContext> options) : base(options)
+        {
+        
+        }
+
         public DbSet<Restaurant> Restaurants { get; set; }
     }
 }
