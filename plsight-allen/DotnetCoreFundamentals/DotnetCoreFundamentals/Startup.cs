@@ -29,7 +29,7 @@ namespace DotnetCoreFundamentals
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DotnetCoreFundamentalsDb"));
             });
-            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+            services.AddScoped<IRestaurantData, SqlRestaurantData>();
             services.AddRazorPages();
         }
 
