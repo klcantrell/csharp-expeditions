@@ -1,4 +1,4 @@
-﻿using DotnetCoreFundamentalsCoreLib;
+﻿using DotnetCoreFundamentals.Core;
 using System.Collections.Generic;
 using System.Text;
 

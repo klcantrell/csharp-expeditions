@@ -1,4 +1,4 @@
-﻿namespace DotnetCoreFundamentalsCoreLib
+﻿namespace DotnetCoreFundamentals.Core
 {
     public enum CuisineType
     {

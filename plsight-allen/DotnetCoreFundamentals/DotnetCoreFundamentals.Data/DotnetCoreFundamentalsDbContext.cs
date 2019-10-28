@@ -1,4 +1,4 @@
-﻿using DotnetCoreFundamentalsCoreLib;
+﻿using DotnetCoreFundamentals.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
