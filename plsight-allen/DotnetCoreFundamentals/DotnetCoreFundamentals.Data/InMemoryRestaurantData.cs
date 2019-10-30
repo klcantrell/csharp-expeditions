@@ -65,5 +65,10 @@ namespace DotnetCoreFundamentals.Data
             }
             return restaurant;
         }
+
+        public int GetCountOfRestaurants()
+        {
+            return restaurants.Count();
+        }
     }
 }
