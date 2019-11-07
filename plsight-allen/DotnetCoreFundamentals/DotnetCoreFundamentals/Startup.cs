@@ -49,6 +49,8 @@ namespace DotnetCoreFundamentals
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseNodeModules();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 

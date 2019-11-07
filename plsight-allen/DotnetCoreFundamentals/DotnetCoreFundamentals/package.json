@@ -2,6 +2,11 @@
   "name": "dotnetcorefundamentals",
   "version": "1.0.0",
   "dependencies": {
-    "datatables.net-bs": "^1.10.20"
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "bootstrap": "^4.3.1",
+    "datatables.net-bs4": "^1.10.20",
+    "jquery": "^3.4.1",
+    "jquery-validation": "^1.19.1",
+    "jquery-validation-unobtrusive": "^3.2.11"
   }
 }
