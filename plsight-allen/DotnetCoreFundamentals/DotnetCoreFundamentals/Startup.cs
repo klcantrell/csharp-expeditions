@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DotnetCoreFundamentals.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,6 +48,7 @@ namespace DotnetCoreFundamentals
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseNodeModules();
@@ -56,11 +58,29 @@ namespace DotnetCoreFundamentals
 
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
+
+            app.Use(SayHelloMiddleware);
+        }
+
+        private RequestDelegate SayHelloMiddleware(RequestDelegate next)
+        {
+            return async ctx =>
+            {
+                if (ctx.Request.Path.StartsWithSegments("/hello"))
+                {
+                    await ctx.Response.WriteAsync("Hello, World!");
+                }
+                else
+                {
+                    await next(ctx);
+                }
+            };
         }
     }
 }
