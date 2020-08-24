@@ -11,5 +11,10 @@ namespace TravelRecord
         {
             InitializeComponent();
         }
+
+        void AddItem_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new NewTravelPage());
+        }
     }
 }
