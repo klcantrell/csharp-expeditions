@@ -17,7 +17,17 @@ namespace TravelRecord
 
         void LoginButton_Pressed(object sender, EventArgs e)
         {
+            var isEmailEmpty = string.IsNullOrEmpty(emailEntry.Text);
+            var isPasswordEmpty = string.IsNullOrEmpty(passwordEntry.Text);
 
+            if (isEmailEmpty || isPasswordEmpty)
+            {
+
+            }
+            else
+            {
+                Navigation.PushAsync(new HomePage());
+            }
         }
     }
 }
