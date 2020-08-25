@@ -17,6 +17,7 @@
             Margin="0, 50, 0, 0"
             x:Name="LoginButton"
             Text="Log in"
+            Style="{StaticResource normalButton}"
             Pressed="LoginButton_Pressed"/>
     </StackLayout>
 </ContentPage>
