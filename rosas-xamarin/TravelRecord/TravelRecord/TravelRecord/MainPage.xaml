@@ -17,8 +17,7 @@
             Margin="0, 50, 0, 0"
             x:Name="LoginButton"
             Text="Log in"
-            Pressed="LoginButton_Pressed"
-            BackgroundColor="BlueViolet"
-            TextColor="White"/>
+            Pressed="LoginButton_Pressed"/>
     </StackLayout>
 </ContentPage>
+ 
