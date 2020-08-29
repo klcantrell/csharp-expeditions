@@ -21,15 +21,16 @@ namespace TravelRecord
             };
 
             experienceEntry.Text = null;
-            SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation);
-            conn.CreateTable<Post>();
-            var rows = conn.Insert(post);
-            conn.Close();
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                conn.CreateTable<Post>();
+                var rows = conn.Insert(post);
 
-            if (rows > 0)
-                DisplayAlert("Success", "Experience successfully inserted", "Ok");
-            else
-                DisplayAlert("Failure", "Experience failed to be inserted", "Ok");
+                if (rows > 0)
+                    DisplayAlert("Success", "Experience successfully inserted", "Ok");
+                else
+                    DisplayAlert("Failure", "Experience failed to be inserted", "Ok");
+            }
         }
     }
 }
