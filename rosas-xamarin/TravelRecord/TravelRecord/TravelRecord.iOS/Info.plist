@@ -34,8 +34,6 @@
 	<string>TravelRecord</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Access to your location allows Travel to find experiences near you</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Access to your location allows Travel to find experiences near you</string>
 </dict>
