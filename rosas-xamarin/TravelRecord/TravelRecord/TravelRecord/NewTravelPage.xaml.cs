@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using SQLite;
+using TravelRecord.Logic;
 using TravelRecord.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace TravelRecord
@@ -13,7 +15,17 @@ namespace TravelRecord
             InitializeComponent();
         }
 
-        void Save_Clicked(object sender, EventArgs e)
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+            var location = await Geolocation.GetLocationAsync(request);
+
+            var venues = VenueLogic.GetVenues(location.Latitude, location.Longitude);
+        }
+
+        private void Save_Clicked(object sender, EventArgs e)
         {
             Post post = new Post()
             {
