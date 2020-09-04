@@ -22,7 +22,7 @@ namespace TravelRecord
             var request = new GeolocationRequest(GeolocationAccuracy.Medium);
             var location = await Geolocation.GetLocationAsync(request);
 
-            var venues = VenueLogic.GetVenues(location.Latitude, location.Longitude);
+            var venues = await VenueLogic.GetVenues(location.Latitude, location.Longitude);
         }
 
         private void Save_Clicked(object sender, EventArgs e)
