@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SQLite;
 using TravelRecord.Logic;
 using TravelRecord.Model;
@@ -28,21 +29,41 @@ namespace TravelRecord
 
         private void Save_Clicked(object sender, EventArgs e)
         {
-            Post post = new Post()
+            try
             {
-                Experience = experienceEntry.Text
-            };
+                var selectedVenue = venueListView.SelectedItem as Venue;
+                var firstCategory = selectedVenue.categories.FirstOrDefault();
+                Post post = new Post()
+                {
+                    Experience = experienceEntry.Text,
+                    CategoryId = firstCategory.id,
+                    CategoryName = firstCategory.name,
+                    Address = selectedVenue.location.address,
+                    Distance = selectedVenue.location.distance,
+                    Latitude = selectedVenue.location.lat,
+                    Longitude = selectedVenue.location.lng,
+                    VenueName = selectedVenue.name,
+                };
 
-            experienceEntry.Text = null;
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                experienceEntry.Text = null;
+                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                {
+                    conn.CreateTable<Post>();
+                    var rows = conn.Insert(post);
+
+                    if (rows > 0)
+                        DisplayAlert("Success", "Experience successfully inserted", "Ok");
+                    else
+                        DisplayAlert("Failure", "Experience failed to be inserted", "Ok");
+                }
+            }
+            catch(NullReferenceException nre)
             {
-                conn.CreateTable<Post>();
-                var rows = conn.Insert(post);
 
-                if (rows > 0)
-                    DisplayAlert("Success", "Experience successfully inserted", "Ok");
-                else
-                    DisplayAlert("Failure", "Experience failed to be inserted", "Ok");
+            }
+            catch(Exception ex)
+            {
+
             }
         }
     }
