@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Plugin.Geolocator;
+using SQLite;
+using TravelRecord.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 
 namespace TravelRecord
 {
@@ -37,7 +41,7 @@ namespace TravelRecord
                     hasLocationPermission = true;
                     locationsMap.IsShowingUser = true;
 
-                    GetLocation();
+                    await GetLocation();
                 }
                 else
                 {
@@ -63,7 +67,15 @@ namespace TravelRecord
                 await locator.StartListeningAsync(TimeSpan.Zero, 100);
             }
 
-            GetLocation();
+            await GetLocation();
+
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            {
+                conn.CreateTable<Post>();
+                var posts = conn.Table<Post>().ToList();
+
+                DisplayInMap(posts);
+            }
         }
 
         protected override async void OnDisappearing()
@@ -77,7 +89,7 @@ namespace TravelRecord
 
         private void Locator_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
         {
-            Location location = new Location()
+            Xamarin.Essentials.Location location = new Xamarin.Essentials.Location()
             {
                 Latitude = e.Position.Latitude,
                 Longitude = e.Position.Longitude,
@@ -85,7 +97,7 @@ namespace TravelRecord
             MoveMap(location);
         }
 
-        private async void GetLocation()
+        private async Task GetLocation()
         {
             if (hasLocationPermission)
             {
@@ -96,11 +108,32 @@ namespace TravelRecord
             }
         }
 
-        private void MoveMap(Location location)
+        private void MoveMap(Xamarin.Essentials.Location location)
         {
-            var center = new Xamarin.Forms.Maps.Position(location.Latitude, location.Longitude);
-            var mapSpan = new Xamarin.Forms.Maps.MapSpan(center, 1, 1);
+            var center = new Position(location.Latitude, location.Longitude);
+            var mapSpan = new MapSpan(center, 1, 1);
             locationsMap.MoveToRegion(mapSpan);
+        }
+
+        private void DisplayInMap(List<Post> posts)
+        {
+            foreach (var post in posts)
+            {
+                try
+                {
+                    var position = new Position(post.Latitude, post.Longitude);
+                    var pin = new Pin()
+                    {
+                        Type = PinType.SavedPin,
+                        Position = position,
+                        Label = post.VenueName,
+                        Address = post.Address,
+                    };
+                    locationsMap.Pins.Add(pin);
+                }
+                catch(NullReferenceException nre) {}
+                catch(Exception ex) {}
+            }
         }
     }
 }
