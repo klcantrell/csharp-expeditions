@@ -23,6 +23,7 @@ namespace TravelRecord
             var location = await Geolocation.GetLocationAsync(request);
 
             var venues = await VenueLogic.GetVenues(location.Latitude, location.Longitude);
+            venueListView.ItemsSource = venues;
         }
 
         private void Save_Clicked(object sender, EventArgs e)
