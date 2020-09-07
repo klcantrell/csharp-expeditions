@@ -21,9 +21,21 @@ namespace TravelRecord
             using(SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
             {
                 var posts = conn.Table<Post>().ToList();
+
                 var categories = (from p in posts
                                  orderby p.CategoryId
-                                 select p.CategoryName).Distinct().ToList();
+                                 select p.CategoryName).Distinct();
+
+                Dictionary<String, int> categoriesCount = new Dictionary<string, int>();
+
+                foreach(var category in categories)
+                {
+                    var count = (from p in posts
+                                 where p.CategoryName == category
+                                 select p).ToList().Count;
+
+                    categoriesCount.Add(category, count);
+                }
 
                 postCountLabel.Text = posts.Count.ToString();
             }
