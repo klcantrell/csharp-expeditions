@@ -37,6 +37,8 @@ namespace TravelRecord
                     categoriesCount.Add(category, count);
                 }
 
+                categoriesListView.ItemsSource = categoriesCount;
+
                 postCountLabel.Text = posts.Count.ToString();
             }
         }
