@@ -10,7 +10,7 @@ namespace TravelRecord
     {
         public static string DatabaseLocation = string.Empty;
 
-        public static MobileServiceClient client = new MobileServiceClient(Constants.APP_SERVICE_URL);
+        public static MobileServiceClient MobileService = new MobileServiceClient(Constants.APP_SERVICE_URL);
 
         public App()
         {
