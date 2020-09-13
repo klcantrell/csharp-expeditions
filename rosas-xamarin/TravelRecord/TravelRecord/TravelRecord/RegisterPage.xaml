@@ -1,14 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TravelRecord.MainPage">
+             x:Class="TravelRecord.RegisterPage">
     <StackLayout
         VerticalOptions="Center"
         Margin="20, 0">
-        <Image x:Name="iconImage"
-               Aspect="AspectFit"
-               HeightRequest="100"
-               Margin="0, 0, 0, 50"/>
         <Entry
             x:Name="emailEntry"
             Placeholder="Email address"
@@ -17,16 +13,15 @@
             x:Name="passwordEntry"
             Placeholder="Password"
             IsPassword="True"/>
+        <Entry
+            x:Name="confirmPasswordEntry"
+            Placeholder="Confirm password"
+            IsPassword="True"/>
         <Button
             Margin="0, 50, 0, 0"
-            x:Name="LoginButton"
-            Text="Log in"
-            Style="{StaticResource normalButton}"
-            Pressed="LoginButton_Pressed"/>
-        <Button
             x:Name="RegisterButton"
             Text="Register"
-            HorizontalOptions="End"
+            Style="{StaticResource normalButton}"
             Pressed="RegisterButton_Pressed"/>
     </StackLayout>
 </ContentPage>
