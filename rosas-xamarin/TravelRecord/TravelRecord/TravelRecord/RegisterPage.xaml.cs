@@ -22,6 +22,7 @@ namespace TravelRecord
                     Password = passwordEntry.Text,
                 };
                 await App.MobileService.GetTable<Users>().InsertAsync(user);
+                await Navigation.PushAsync(new HomePage());
 
             }
             else

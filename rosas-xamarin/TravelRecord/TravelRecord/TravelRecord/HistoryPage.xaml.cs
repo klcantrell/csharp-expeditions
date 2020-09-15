@@ -13,17 +13,15 @@ namespace TravelRecord
             InitializeComponent();
         }
         
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<Post>();
-                var posts = conn.Table<Post>().ToList();
+            var posts = await App.MobileService
+                .GetTable<Post>()
+                .Where(p => p.UserId == App.user.Id).ToListAsync();
 
-                postListView.ItemsSource = posts;
-            }
+            postListView.ItemsSource = posts;
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
