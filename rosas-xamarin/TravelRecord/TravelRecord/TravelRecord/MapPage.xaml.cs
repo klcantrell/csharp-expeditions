@@ -69,13 +69,11 @@ namespace TravelRecord
 
             await GetLocation();
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<Post>();
-                var posts = conn.Table<Post>().ToList();
+            var posts = await (App.MobileService
+                .GetTable<Post>()
+                .Where(p => p.UserId == App.user.Id).ToListAsync());
 
-                DisplayInMap(posts);
-            }
+            DisplayInMap(posts);
         }
 
         protected override async void OnDisappearing()
