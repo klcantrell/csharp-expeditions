@@ -1,8 +1,25 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TravelRecord.PostDetailPage">
-    <StackLayout>
+    <StackLayout Margin="16,20,16,0">
         <Entry x:Name="experienceEntry" />
-        <Button Text="Update" x:Name="updateButton" Pressed="updateButton_Pressed" />
-        <Button Text="Delete" x:Name="deleteButton" Pressed="deleteButton_Pressed" />
+        <Label x:Name="venueLabel"
+               Margin="0,30,0,0"
+               FontAttributes="Bold"
+               FontSize="22"/>
+        <Label x:Name="categoryLabel"
+               TextColor="{StaticResource blueColor}"/>
+        <Label x:Name="addressLabel"
+               FontSize="15"/>
+        <Label x:Name="coordinatesLabel"
+               FontSize="15"/>
+        <Label x:Name="distanceLabel"
+               FontSize="15"/>
+        <Button Text="Update"
+                x:Name="updateButton"
+                Pressed="updateButton_Pressed" />
+        <Button Text="Delete"
+                x:Name="deleteButton"
+                Pressed="deleteButton_Pressed"
+                TextColor="Red"/>
     </StackLayout>
 </ContentPage>

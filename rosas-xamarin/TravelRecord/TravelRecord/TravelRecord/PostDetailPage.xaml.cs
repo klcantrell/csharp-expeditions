@@ -16,34 +16,38 @@ namespace TravelRecord
             this.selectedPost = selectedPost;
 
             experienceEntry.Text = selectedPost.Experience;
+            venueLabel.Text = selectedPost.VenueName;
+            categoryLabel.Text = selectedPost.CategoryName;
+            addressLabel.Text = selectedPost.Address;
+            coordinatesLabel.Text = $"{selectedPost.Latitude}, {selectedPost.Longitude}";
+            distanceLabel.Text = $"{selectedPost.Distance} m";
         }
 
-        void updateButton_Pressed(object sender, EventArgs e)
+        async void updateButton_Pressed(object sender, EventArgs e)
         {
             selectedPost.Experience = experienceEntry.Text;
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            try
             {
-                conn.CreateTable<Post>();
-                var rows = conn.Update(selectedPost);
-
-                if (rows > 0)
-                    DisplayAlert("Success", "Experience successfully updated", "Ok");
-                else
-                    DisplayAlert("Failure", "Experience failed to be updated", "Ok");
+                await App.MobileService.GetTable<Post>().UpdateAsync(selectedPost);
+                await DisplayAlert("Success", "Experience successfully updated", "Ok");
+            }
+            catch
+            {
+                await DisplayAlert("Failure", "Experience failed to be updated", "Ok");
             }
         }
-        void deleteButton_Pressed(object sender, EventArgs e)
-        {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-            {
-                conn.CreateTable<Post>();
-                var rows = conn.Delete(selectedPost);
 
-                if (rows > 0)
-                    DisplayAlert("Success", "Experience successfully deleted", "Ok");
-                else
-                    DisplayAlert("Failure", "Experience failed to be deleted", "Ok");
+        async void deleteButton_Pressed(object sender, EventArgs e)
+        {
+            try
+            {
+                await App.MobileService.GetTable<Post>().DeleteAsync(selectedPost);
+                await Navigation.PopAsync();
+            }
+            catch
+            {
+                await DisplayAlert("Failure", "Experience failed to be deleted", "Ok");
             }
         }
     }
