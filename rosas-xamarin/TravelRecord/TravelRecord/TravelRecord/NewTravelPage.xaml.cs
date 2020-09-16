@@ -40,8 +40,8 @@ namespace TravelRecord
                     CategoryName = firstCategory.name,
                     Address = selectedVenue.location.address,
                     Distance = selectedVenue.location.distance,
-                    Latitude = selectedVenue.location.lng,
-                    Longitude = selectedVenue.location.lat,
+                    Latitude = selectedVenue.location.lat,
+                    Longitude = selectedVenue.location.lng,
                     VenueName = selectedVenue.name,
                     UserId = App.user.Id,
                 };
