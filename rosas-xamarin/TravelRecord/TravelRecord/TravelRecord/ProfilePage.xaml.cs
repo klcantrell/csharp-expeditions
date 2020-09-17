@@ -18,25 +18,9 @@ namespace TravelRecord
         {
             base.OnAppearing();
 
-            var posts = await (App.MobileService
-                .GetTable<Post>()
-                .Where(p => p.UserId == App.user.Id).ToListAsync());
+            var posts = await Post.FindByUserId(App.user.Id);
 
-
-            var categories = (from p in posts
-                                orderby p.CategoryId
-                                select p.CategoryName).Distinct();
-
-            Dictionary<String, int> categoriesCount = new Dictionary<string, int>();
-
-            foreach(var category in categories)
-            {
-                var count = (from p in posts
-                                where p.CategoryName == category
-                                select p).ToList().Count;
-
-                categoriesCount.Add(category, count);
-            }
+            var categoriesCount = Post.GetPostCategoriesCount(posts);
 
             categoriesListView.ItemsSource = categoriesCount;
 

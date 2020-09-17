@@ -69,9 +69,7 @@ namespace TravelRecord
 
             await GetLocation();
 
-            var posts = await (App.MobileService
-                .GetTable<Post>()
-                .Where(p => p.UserId == App.user.Id).ToListAsync());
+            var posts = await Post.FindByUserId(App.user.Id);
 
             DisplayInMap(posts);
         }

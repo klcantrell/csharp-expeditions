@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using TravelRecord.Model;
 using Xamarin.Forms;
@@ -14,20 +14,14 @@ namespace TravelRecord
 
         async void RegisterButton_Pressed(object sender, EventArgs e)
         {
-            if (passwordEntry.Text == confirmPasswordEntry.Text)
+            switch (await Users.Register(emailEntry.Text, passwordEntry.Text, confirmPasswordEntry.Text))
             {
-                Users user = new Users()
-                {
-                    Email = emailEntry.Text,
-                    Password = passwordEntry.Text,
-                };
-                await App.MobileService.GetTable<Users>().InsertAsync(user);
-                await Navigation.PushAsync(new HomePage());
-
-            }
-            else
-            {
-                await DisplayAlert("Error", "Passwords don't match", "Ok");
+                case RegisterResult.Success:
+                    await Navigation.PushAsync(new HomePage());
+                    break;
+                case RegisterResult.Failure:
+                    await DisplayAlert("Error", "Passwords don't match", "Ok");
+                    break;
             }
         }
     }

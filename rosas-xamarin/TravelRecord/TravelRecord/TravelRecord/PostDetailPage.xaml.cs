@@ -29,7 +29,7 @@ namespace TravelRecord
 
             try
             {
-                await App.MobileService.GetTable<Post>().UpdateAsync(selectedPost);
+                await Post.Update(selectedPost);
                 await DisplayAlert("Success", "Experience successfully updated", "Ok");
             }
             catch
@@ -42,7 +42,7 @@ namespace TravelRecord
         {
             try
             {
-                await App.MobileService.GetTable<Post>().DeleteAsync(selectedPost);
+                await Post.Delete(selectedPost);
                 await Navigation.PopAsync();
             }
             catch

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SQLite;
-using TravelRecord.Logic;
 using TravelRecord.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -23,7 +22,7 @@ namespace TravelRecord
             var request = new GeolocationRequest(GeolocationAccuracy.Medium);
             var location = await Geolocation.GetLocationAsync(request);
 
-            var venues = await VenueLogic.GetVenues(location.Latitude, location.Longitude);
+            var venues = await Venue.GetVenues(location.Latitude, location.Longitude);
             venueListView.ItemsSource = venues;
         }
 
@@ -48,7 +47,7 @@ namespace TravelRecord
 
                 experienceEntry.Text = null;
 
-                await App.MobileService.GetTable<Post>().InsertAsync(post);
+                await Post.Insert(post);
                 await DisplayAlert("Success", "Experience successfully inserted", "Ok");
             }
             catch(NullReferenceException nre)

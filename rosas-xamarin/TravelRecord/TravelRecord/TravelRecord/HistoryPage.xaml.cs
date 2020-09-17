@@ -17,9 +17,7 @@ namespace TravelRecord
         {
             base.OnAppearing();
 
-            var posts = await (App.MobileService
-                .GetTable<Post>()
-                .Where(p => p.UserId == App.user.Id).ToListAsync());
+            var posts = await Post.FindByUserId(App.user.Id);
 
             postListView.ItemsSource = posts;
         }
