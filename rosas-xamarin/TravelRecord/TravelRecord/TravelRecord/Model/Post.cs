@@ -2,27 +2,132 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SQLite;
+using System.ComponentModel;
 
 namespace TravelRecord.Model
 {
-    public class Post
+    public class Post : INotifyPropertyChanged
     {
-        [PrimaryKey]
-        public string Id { get; set; }
+        private string id;
 
-        [MaxLength(250)]
-        public string Experience { get; set; }
+        public string Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
 
-        public string VenueName { get; set; }
+        private string experience;
 
-        public string CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public string Address { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public int Distance { get; set; }
-        public string UserId { get; set; }
+        public string Experience
+        {
+            get => experience;
+            set
+            {
+                experience = value;
+                OnPropertyChanged("Experience");
+            }
+        }
+
+        private string venueName;
+
+        public string VenueName
+        {
+            get => venueName;
+            set
+            {
+                venueName = value;
+                OnPropertyChanged("VenueName");
+            }
+        }
+
+        private string categoryId;
+
+        public string CategoryId
+        {
+            get => categoryId;
+            set
+            {
+                categoryId = value;
+                OnPropertyChanged("CategoryId");
+            }
+        }
+
+        private string categoryName;
+
+        public string CategoryName
+        {
+            get => categoryName;
+            set
+            {
+                categoryName = value;
+                OnPropertyChanged("CategoryName");
+            }
+        }
+
+        private string address;
+
+        public string Address {
+            get => address;
+            set
+            {
+                address = value;
+                OnPropertyChanged("Address");
+            }
+        }
+
+        private double latitude;
+
+        public double Latitude
+        {
+            get => latitude;
+            set
+            {
+                latitude = value;
+                OnPropertyChanged("Latitude");
+            }
+        }
+
+        private double longitude;
+
+        public double Longitude
+        {
+            get => longitude;
+            set
+            {
+                longitude = value;
+                OnPropertyChanged("Longitude");
+            }
+        }
+
+        private int distance;
+
+        public int Distance
+        {
+            get => distance;
+            set
+            {
+                distance = value;
+                OnPropertyChanged("Distance");
+            }
+        }
+
+        private string userId;
+
+        public string UserId
+        {
+            get => userId;
+            set
+            {
+                userId = value;
+                OnPropertyChanged("UserId");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public static async Task Insert(Post post)
         {
@@ -69,6 +174,11 @@ namespace TravelRecord.Model
             }
 
             return categoriesCount;
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
