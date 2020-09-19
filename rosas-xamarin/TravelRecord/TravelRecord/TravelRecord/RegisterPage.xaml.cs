@@ -7,21 +7,26 @@ namespace TravelRecord
 {
     public partial class RegisterPage : ContentPage
     {
+        private readonly Users user;
+
         public RegisterPage()
         {
             InitializeComponent();
+
+            user = new Users();
+            containerStackLayout.BindingContext = user;
         }
 
         async void RegisterButton_Pressed(object sender, EventArgs e)
         {
-            switch (await Users.Register(emailEntry.Text, passwordEntry.Text, confirmPasswordEntry.Text))
+            if (passwordEntry.Text == confirmPasswordEntry.Text)
             {
-                case RegisterResult.Success:
-                    await Navigation.PushAsync(new HomePage());
-                    break;
-                case RegisterResult.Failure:
-                    await DisplayAlert("Error", "Passwords don't match", "Ok");
-                    break;
+                await Users.Register(user);
+                await Navigation.PushAsync(new HomePage());
+            }
+            else
+            {
+                await DisplayAlert("Error", "Passwords don't match", "Ok");
             }
         }
     }

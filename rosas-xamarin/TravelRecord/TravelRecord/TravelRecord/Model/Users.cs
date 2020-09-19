@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace TravelRecord.Model
@@ -92,28 +93,30 @@ namespace TravelRecord.Model
             }
         }
 
-        public static async Task<RegisterResult> Register(string email, string password, string confirmPassword)
+        public static async Task Register(Users user)
         {
-            if (password == confirmPassword)
-            {
-                Users user = new Users()
-                {
-                    Email = email,
-                    Password = password,
-                };
-
-                await Users.Insert(user);
-                return RegisterResult.Success;
-            }
-            else
-            {
-                return RegisterResult.Failure;
-            }
+            await Users.Insert(user);
         }
 
         private void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            if (isDeserializing) return;
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private bool isDeserializing = false;
+
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext streamingContext)
+        {
+            isDeserializing = true;
+        }
+
+        [OnSerializing]
+        private void OnSerializing(StreamingContext streamingContex)
+        {
+            isDeserializing = false;
         }
     }
 }

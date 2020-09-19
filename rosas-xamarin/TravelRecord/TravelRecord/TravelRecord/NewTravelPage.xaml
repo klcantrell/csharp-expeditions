@@ -8,8 +8,9 @@
                      Clicked="Save_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <StackLayout>
+    <StackLayout x:Name="containerStackLayout">
         <Entry x:Name="experienceEntry"
+               Text="{Binding Experience, Mode=TwoWay}"
                Placeholder="Write your experience" />
         <ListView x:Name="venueListView"
                   HorizontalOptions="FillAndExpand"

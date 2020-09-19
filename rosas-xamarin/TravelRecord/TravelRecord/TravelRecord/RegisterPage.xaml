@@ -3,13 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TravelRecord.RegisterPage">
     <StackLayout
+        x:Name="containerStackLayout"
         VerticalOptions="Center"
         Margin="20, 0">
         <Entry
+            Text="{Binding Email, Mode=TwoWay}"
             x:Name="emailEntry"
             Placeholder="Email address"
             Keyboard="Email"/>
         <Entry
+            Text="{Binding Password, Mode=TwoWay}"
             x:Name="passwordEntry"
             Placeholder="Password"
             IsPassword="True"/>
@@ -25,4 +28,3 @@
             Pressed="RegisterButton_Pressed"/>
     </StackLayout>
 </ContentPage>
- 

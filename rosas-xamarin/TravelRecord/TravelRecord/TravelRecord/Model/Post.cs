@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace TravelRecord.Model
 {
@@ -178,7 +179,24 @@ namespace TravelRecord.Model
 
         private void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            if (isDeserializing) return;
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        private bool isDeserializing = false;
+
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext streamingContext)
+        {
+            isDeserializing = true;
+        }
+
+        [OnSerializing]
+        private void OnSerializing(StreamingContext streamingContex)
+        {
+            isDeserializing = false;
         }
     }
 }
