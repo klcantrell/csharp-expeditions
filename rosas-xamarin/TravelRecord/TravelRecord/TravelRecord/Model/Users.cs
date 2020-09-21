@@ -64,32 +64,22 @@ namespace TravelRecord.Model
 
         public static async Task<LoginResult> Login(string email, string password)
         {
-            var isEmailEmpty = string.IsNullOrEmpty(email);
-            var isPasswordEmpty = string.IsNullOrEmpty(password);
-
-            if (isEmailEmpty || isPasswordEmpty)
+            var user = await Users.FindByEmail(email);
+            if (user != null)
             {
-                return LoginResult.MissingField;
-            }
-            else
-            {
-                var user = await Users.FindByEmail(email);
-                if (user != null)
+                App.user = user;
+                if (user.Password == password)
                 {
-                    App.user = user;
-                    if (user.Password == password)
-                    {
-                        return LoginResult.Success;
-                    }
-                    else
-                    {
-                        return LoginResult.WrongPassword;
-                    }
+                    return LoginResult.Success;
                 }
                 else
                 {
-                    return LoginResult.Failure;
+                    return LoginResult.WrongPassword;
                 }
+            }
+            else
+            {
+                return LoginResult.Failure;
             }
         }
 

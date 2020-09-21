@@ -10,19 +10,19 @@
                HeightRequest="100"
                Margin="0, 0, 0, 50"/>
         <Entry
-            x:Name="emailEntry"
+            Text="{Binding Email, Mode=TwoWay}"
             Placeholder="Email address"
             Keyboard="Email"/>
         <Entry
-            x:Name="passwordEntry"
+            Text="{Binding Password, Mode=TwoWay}"
             Placeholder="Password"
             IsPassword="True"/>
         <Button
+            Command="{Binding LoginCommand}"
+            CommandParameter="{Binding User}"
             Margin="0, 50, 0, 0"
-            x:Name="LoginButton"
             Text="Log in"
-            Style="{StaticResource normalButton}"
-            Pressed="LoginButton_Pressed"/>
+            Style="{StaticResource normalButton}" />
         <Button
             x:Name="RegisterButton"
             Text="Register"

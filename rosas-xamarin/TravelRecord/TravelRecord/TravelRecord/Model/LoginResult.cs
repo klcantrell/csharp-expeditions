@@ -5,7 +5,6 @@ namespace TravelRecord.Model
     {
         Success,
         Failure,
-        MissingField,
         WrongPassword,
     }
 }
