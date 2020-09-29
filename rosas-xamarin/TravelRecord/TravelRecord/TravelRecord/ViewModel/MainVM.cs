@@ -6,9 +6,12 @@ using TravelRecord.ViewModel.Commands;
 
 namespace TravelRecord.ViewModel
 {
-    public class MainVM : INotifyPropertyChanged
+    public class MainVM : INotifyPropertyChanged, INavigableViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public LoginCommand LoginCommand { get; set; }
+        public NavigationCommand NavigationCommand { get; set; }
 
         private Users user;
         public Users User {
@@ -19,8 +22,6 @@ namespace TravelRecord.ViewModel
                 OnPropertyChanged("User");
             }
         }
-
-        public LoginCommand LoginCommand { get; set; }
 
         private string email;
         public string Email
@@ -58,6 +59,7 @@ namespace TravelRecord.ViewModel
         {
             User = new Users();
             LoginCommand = new LoginCommand(this);
+            NavigationCommand = new NavigationCommand(this);
         }
 
         public async void Login()
@@ -74,6 +76,11 @@ namespace TravelRecord.ViewModel
                     await App.Current.MainPage.DisplayAlert("Error", "There was an error logging you in", "Ok");
                     break;
             }
+        }
+
+        public async void Navigate()
+        {
+            await App.Current.MainPage.Navigation.PushAsync(new RegisterPage());
         }
 
         private void OnPropertyChanged(string propertyName)

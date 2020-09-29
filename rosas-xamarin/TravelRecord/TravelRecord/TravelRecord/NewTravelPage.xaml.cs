@@ -12,6 +12,7 @@ namespace TravelRecord
     {
         private readonly Post post;
 
+
         public NewTravelPage()
         {
             InitializeComponent();

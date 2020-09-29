@@ -3,7 +3,7 @@ using TravelRecord.ViewModel.Commands;
 
 namespace TravelRecord.ViewModel
 {
-    public class HomeVM
+    public class HomeVM : INavigableViewModel
     {
         public NavigationCommand NavigationCommand { get; set; }
 

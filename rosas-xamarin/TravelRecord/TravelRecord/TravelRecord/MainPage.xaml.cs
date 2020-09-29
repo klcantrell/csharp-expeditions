@@ -19,15 +19,10 @@ namespace TravelRecord
             InitializeComponent();
 
             viewModel = new MainVM();
-             BindingContext = viewModel;
+            BindingContext = viewModel;
 
             var assembly = typeof(MainPage);
             iconImage.Source = ImageSource.FromResource("TravelRecord.Assets.Images.plane.png", assembly);
-        }
-
-        void RegisterButton_Pressed(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new RegisterPage());
         }
     }
 }

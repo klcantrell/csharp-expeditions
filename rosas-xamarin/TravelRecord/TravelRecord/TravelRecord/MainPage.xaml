@@ -24,10 +24,9 @@
             Text="Log in"
             Style="{StaticResource normalButton}" />
         <Button
-            x:Name="RegisterButton"
+            Command="{Binding NavigationCommand}"
             Text="Register"
-            HorizontalOptions="End"
-            Pressed="RegisterButton_Pressed"/>
+            HorizontalOptions="End"/>
     </StackLayout>
 </ContentPage>
  

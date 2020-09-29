@@ -8,16 +8,14 @@
         Margin="20, 0">
         <Entry
             Text="{Binding Email, Mode=TwoWay}"
-            x:Name="emailEntry"
             Placeholder="Email address"
             Keyboard="Email"/>
         <Entry
             Text="{Binding Password, Mode=TwoWay}"
-            x:Name="passwordEntry"
             Placeholder="Password"
             IsPassword="True"/>
         <Entry
-            x:Name="confirmPasswordEntry"
+            Text="{Binding ConfirmPassword, Mode=TwoWay}"
             Placeholder="Confirm password"
             IsPassword="True"/>
         <Button
@@ -25,6 +23,6 @@
             x:Name="RegisterButton"
             Text="Register"
             Style="{StaticResource normalButton}"
-            Pressed="RegisterButton_Pressed"/>
+            Command="{Binding RegisterCommand}"/>
     </StackLayout>
 </ContentPage>

@@ -7,7 +7,7 @@ namespace TravelRecord
 {
     public partial class HomePage : TabbedPage
     {
-        HomeVM viewModel;
+        public HomeVM viewModel;
 
         public HomePage()
         {

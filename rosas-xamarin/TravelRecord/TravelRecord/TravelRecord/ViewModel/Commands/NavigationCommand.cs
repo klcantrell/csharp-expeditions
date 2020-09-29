@@ -5,11 +5,11 @@ namespace TravelRecord.ViewModel.Commands
 {
     public class NavigationCommand : ICommand
     {
-        public HomeVM HomeViewModel { get; set; }
+        public INavigableViewModel viewModel { get; set; }
 
-        public NavigationCommand(HomeVM homeVM)
+        public NavigationCommand(INavigableViewModel homeVM)
         {
-            HomeViewModel = homeVM;
+            viewModel = homeVM;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -18,7 +18,7 @@ namespace TravelRecord.ViewModel.Commands
 
         public void Execute(object parameter)
         {
-            HomeViewModel.Navigate();
+            viewModel.Navigate();
         }
     }
 }
