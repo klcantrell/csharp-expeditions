@@ -5,14 +5,15 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save"
                      IconImageSource="save.png"
-                     Clicked="Save_Clicked" />
+                     Command="{Binding PostCommand}"
+                     CommandParameter="{Binding Post}"/>
     </ContentPage.ToolbarItems>
 
-    <StackLayout x:Name="containerStackLayout">
-        <Entry x:Name="experienceEntry"
-               Text="{Binding Experience, Mode=TwoWay}"
+    <StackLayout>
+        <Entry Text="{Binding Experience, Mode=TwoWay}"
                Placeholder="Write your experience" />
         <ListView x:Name="venueListView"
+                  SelectedItem="{Binding Venue, Mode=TwoWay}"
                   HorizontalOptions="FillAndExpand"
                   Margin="20, 0">
             <ListView.ItemTemplate>

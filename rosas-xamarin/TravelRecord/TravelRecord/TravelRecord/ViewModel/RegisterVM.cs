@@ -64,24 +64,7 @@ namespace TravelRecord.ViewModel
 
         private void OnPropertyChanged(string propertyName)
         {
-            if (isDeserializing) return;
-
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-        private bool isDeserializing = false;
-
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext streamingContext)
-        {
-            isDeserializing = true;
-        }
-
-        [OnSerializing]
-        private void OnSerializing(StreamingContext streamingContex)
-        {
-            isDeserializing = false;
         }
     }
 }
