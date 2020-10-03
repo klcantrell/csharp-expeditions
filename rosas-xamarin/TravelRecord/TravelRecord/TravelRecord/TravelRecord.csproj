@@ -26,6 +26,7 @@
     <Folder Include="Assets\Images\" />
     <Folder Include="ViewModel\" />
     <Folder Include="ViewModel\Commands\" />
+    <Folder Include="ViewModel\Converters\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\Images\plane.png" />

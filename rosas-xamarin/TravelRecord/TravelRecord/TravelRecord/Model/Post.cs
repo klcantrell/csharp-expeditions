@@ -8,10 +8,12 @@ using Newtonsoft.Json;
 
 namespace TravelRecord.Model
 {
+
     public class Post : INotifyPropertyChanged
     {
-        private string id;
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        private string id;
         public string Id
         {
             get => id;
@@ -23,7 +25,6 @@ namespace TravelRecord.Model
         }
 
         private string experience;
-
         public string Experience
         {
             get => experience;
@@ -35,7 +36,6 @@ namespace TravelRecord.Model
         }
 
         private string venueName;
-
         public string VenueName
         {
             get => venueName;
@@ -47,7 +47,6 @@ namespace TravelRecord.Model
         }
 
         private string categoryId;
-
         public string CategoryId
         {
             get => categoryId;
@@ -59,7 +58,6 @@ namespace TravelRecord.Model
         }
 
         private string categoryName;
-
         public string CategoryName
         {
             get => categoryName;
@@ -71,7 +69,6 @@ namespace TravelRecord.Model
         }
 
         private string address;
-
         public string Address {
             get => address;
             set
@@ -82,7 +79,6 @@ namespace TravelRecord.Model
         }
 
         private double latitude;
-
         public double Latitude
         {
             get => latitude;
@@ -94,7 +90,6 @@ namespace TravelRecord.Model
         }
 
         private double longitude;
-
         public double Longitude
         {
             get => longitude;
@@ -106,7 +101,6 @@ namespace TravelRecord.Model
         }
 
         private int distance;
-
         public int Distance
         {
             get => distance;
@@ -118,7 +112,6 @@ namespace TravelRecord.Model
         }
 
         private string userId;
-
         public string UserId
         {
             get => userId;
@@ -126,6 +119,17 @@ namespace TravelRecord.Model
             {
                 userId = value;
                 OnPropertyChanged("UserId");
+            }
+        }
+
+        private DateTimeOffset createdAt;
+        public DateTimeOffset CreatedAt
+        {
+            get => createdAt;
+            set
+            {
+                createdAt = value;
+                OnPropertyChanged("CreatedAt");
             }
         }
 
@@ -159,8 +163,6 @@ namespace TravelRecord.Model
                 OnPropertyChanged("Venue");
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public static async Task Insert(Post post)
         {
@@ -215,7 +217,6 @@ namespace TravelRecord.Model
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
 
         private bool isDeserializing = false;
 
