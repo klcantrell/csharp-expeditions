@@ -1,4 +1,5 @@
-﻿using TravelRecord.Model;
+﻿using System;
+using TravelRecord.Model;
 using TravelRecord.ViewModel;
 using Xamarin.Forms;
 
@@ -15,10 +16,10 @@ namespace TravelRecord
             BindingContext = viewModel;
         }
         
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
-            viewModel.UpdatePosts();
+            await viewModel.UpdatePosts();
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -29,6 +30,20 @@ namespace TravelRecord
             {
                 Navigation.PushAsync(new PostDetailPage(selectedPost));
             }
+        }
+
+        private async void Delete_Clicked(object sender, EventArgs e)
+        {
+            var post = (sender as MenuItem).CommandParameter as Post;
+            viewModel.DeletePost(post);
+
+            await viewModel.UpdatePosts();
+        }
+
+        private async void postListView_Refreshing(object sender, EventArgs e)
+        {
+            await viewModel.UpdatePosts();
+            postListView.IsRefreshing = false;
         }
     }
 }

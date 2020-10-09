@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using TravelRecord.Model;
 
 namespace TravelRecord.ViewModel
@@ -12,7 +13,7 @@ namespace TravelRecord.ViewModel
             Posts = new ObservableCollection<Post>();
         }
 
-        public async void UpdatePosts()
+        public async Task UpdatePosts()
         {
             var posts = await Post.FindByUserId(App.user.Id);
 
@@ -24,6 +25,11 @@ namespace TravelRecord.ViewModel
                     Posts.Add(post);
                 }
             }
+        }
+
+        public async void DeletePost(Post post)
+        {
+            await Post.Delete(post);
         }
     }
 }

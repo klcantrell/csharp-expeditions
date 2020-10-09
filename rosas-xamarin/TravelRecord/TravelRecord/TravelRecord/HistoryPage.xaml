@@ -11,11 +11,20 @@
     <ListView
         x:Name="postListView"
         ItemSelected="OnItemSelected"
-        ItemsSource="{Binding Posts}">
+        ItemsSource="{Binding Posts}"
+        IsPullToRefreshEnabled="True"
+        Refreshing="postListView_Refreshing">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <TextCell Text="{Binding Experience}"
-                          Detail="{Binding CreatedAt, Converter={StaticResource converter}}"/>
+                          Detail="{Binding CreatedAt, Converter={StaticResource converter}}">
+                    <TextCell.ContextActions>
+                        <MenuItem Text="Delete"
+                                  Clicked="Delete_Clicked"
+                                  CommandParameter="{Binding}"
+                                  IsDestructive="True"/>
+                    </TextCell.ContextActions>
+                </TextCell>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
