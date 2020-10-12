@@ -13,7 +13,7 @@ namespace TravelRecord.ViewModel
             Posts = new ObservableCollection<Post>();
         }
 
-        public async Task UpdatePosts()
+        public async void UpdatePosts()
         {
             var posts = await Post.FindByUserId(App.user.Id);
 

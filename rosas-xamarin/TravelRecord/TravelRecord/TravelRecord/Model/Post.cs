@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace TravelRecord.Model
 {
@@ -166,29 +167,26 @@ namespace TravelRecord.Model
 
         public static async Task Insert(Post post)
         {
-            await App.MobileService.GetTable<Post>().InsertAsync(post);
+            await App.postsTable.InsertAsync(post);
+            await App.MobileService.SyncContext.PushAsync();
+
         }
 
         public static async Task<List<Post>> FindByUserId(string userId)
         {
-            return await App.MobileService
-                .GetTable<Post>()
+            return await App.postsTable
                 .Where(p => p.UserId == userId)
                 .ToListAsync();
         }
 
         public static async Task Update(Post post)
         {
-            await App.MobileService
-                .GetTable<Post>()
-                .UpdateAsync(post);
+            await App.postsTable.UpdateAsync(post);
         }
 
         public static async Task Delete(Post post)
         {
-            await App.MobileService
-                .GetTable<Post>()
-                .DeleteAsync(post);
+            await App.postsTable.DeleteAsync(post);
         }
 
         public static Dictionary<string, int> GetPostCategoriesCount(List<Post> posts)
