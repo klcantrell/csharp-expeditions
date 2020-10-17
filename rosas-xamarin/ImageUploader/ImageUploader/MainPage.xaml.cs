@@ -1,7 +1,11 @@
 ﻿using System;
+using System.IO;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
+using static ImageUploader.Env;
 
 namespace ImageUploader
 {
@@ -35,6 +39,22 @@ namespace ImageUploader
             }
 
             selectedImage.Source = ImageSource.FromStream(() => selectedImageFile.GetStream());
+
+            UploadImage(selectedImageFile.GetStream());
+        }
+
+        private async void UploadImage(Stream stream)
+        {
+            var account = CloudStorageAccount.Parse(STORAGE_CONNECTION_STRING);
+            var client = account.CreateCloudBlobClient();
+            var container = client.GetContainerReference("testimagecontainer");
+            await container.CreateIfNotExistsAsync();
+
+            var name = Guid.NewGuid().ToString();
+            var blockBlob = container.GetBlockBlobReference($"${name}.jpg");
+            await blockBlob.UploadFromStreamAsync(stream);
+
+            var url = blockBlob.Uri.OriginalString;
         }
     }
 }
