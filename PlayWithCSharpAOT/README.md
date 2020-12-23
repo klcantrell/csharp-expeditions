@@ -2,5 +2,9 @@
 
 ## Linux
 
-`dotnet publish -r [linux-x64, win-x64] -c Release -p:UseCoreRT=true`
+`dotnet publish -r linux-x64 -c Release -p:UseCoreRT=true`
 `strip --strip-debug <executableName>`
+
+## Windows
+
+`dotnet publish -r win-x64 -c Release -p:UseCoreRT=true`
