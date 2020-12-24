@@ -8,16 +8,15 @@ namespace RandoCat
     {
         private static readonly HttpClient client = new HttpClient();
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            SendRequest().Wait();
+            await SendRequest();
         }
 
         private static async Task SendRequest()
         {
             var response = await client.GetStringAsync("https://jsonplaceholder.typicode.com/todos/1");
             Console.WriteLine(response);
-            return;
         }
     }
 }
