@@ -6,7 +6,7 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <RootAllApplicationAssemblies>false</RootAllApplicationAssemblies>
     <IlcOptimizationPreference>Size</IlcOptimizationPreference>
-    <IlcDisableReflection>true</IlcDisableReflection>
+    <IlcDisableReflection Condition="'$(RuntimeIdentifier)' != 'win-x64'">true</IlcDisableReflection>
     <IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
