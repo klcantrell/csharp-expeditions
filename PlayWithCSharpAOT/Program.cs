@@ -15,7 +15,7 @@ namespace PlayWithCSharpAOT
             var currentDirectory = Directory.GetCurrentDirectory();
             var files = GetFileData(Directory.GetFiles(currentDirectory));
 
-            ConfirmFiles(files);
+            // ConfirmFiles(files);
 
             foreach (var file in files)
             {

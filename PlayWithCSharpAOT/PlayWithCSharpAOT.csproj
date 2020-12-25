@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(UseCoreRT)' == 'true'">
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <InvariantGlobalization>true</InvariantGlobalization>
@@ -10,6 +10,17 @@
     <IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(UseCoreRT)' != 'true'">
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <DebugType>none</DebugType>
+    <SelfContained>true</SelfContained>
+    <PublishTrimmed>true</PublishTrimmed>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
