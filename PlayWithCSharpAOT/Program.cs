@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using System.Globalization;
 using System.Diagnostics;
 using System.Collections.Generic;
 
@@ -29,10 +28,10 @@ namespace PlayWithCSharpAOT
                 {
                     Console.WriteLine($"Directory for {fileYear}/{fileMonth} does not exist");
                     Console.WriteLine($"Creating directory for {fileYear}/{fileMonth}");
-                    // Directory.CreateDirectory(newParent);
+                    Directory.CreateDirectory(newParent);
                 }
                 Console.WriteLine($"Moving {fileName} to {fileYear}/{fileMonth}");
-                // File.Move(fileFullPath, Path.Combine(newParent, fileName));
+                File.Move(fileFullPath, Path.Combine(newParent, fileName));
             }
         }
 
@@ -50,23 +49,25 @@ namespace PlayWithCSharpAOT
             var directoriesToDisplay = files
                 .Aggregate(new Dictionary<string, HashSet<string>>(), (acc, next) =>
                 {
+                    var (_, _, year, month) = next;
                     if (acc.ContainsKey(next.year))
                     {
-                        acc[next.year].Add(next.month);
+                        acc[year].Add(month);
                         return acc;
                     }
                     else
                     {
-                        acc.Add(next.year, new HashSet<string>() { next.month });
+                        acc.Add(year, new HashSet<string>() { month });
                         return acc;
                     }
                 })
                 .Aggregate("", (displayText, next) =>
                 {
+                    var (year, months) = next;
                     return String.Concat(
                         displayText,
-                        $"\n{next.Key}",
-                        String.Join("", next.Value.Select((month) => $"\n  -- {month}"))
+                        $"\n{year}",
+                        String.Join("", months.Select((month) => $"\n  -- {month}"))
                     );
                 });
 
