@@ -29,16 +29,17 @@ namespace PlayWithCSharpAOT
                 {
                     Console.WriteLine($"Directory for {fileYear}/{fileMonth} does not exist");
                     Console.WriteLine($"Creating directory for {fileYear}/{fileMonth}");
-                    Directory.CreateDirectory(newParent);
+                    // Directory.CreateDirectory(newParent);
                 }
                 Console.WriteLine($"Moving {fileName} to {fileYear}/{fileMonth}");
-                File.Move(fileFullPath, Path.Combine(newParent, fileName));
+                // File.Move(fileFullPath, Path.Combine(newParent, fileName));
             }
         }
 
         static void ConfirmFiles(List<FileData> files)
         {
             const int maxToDisplay = 10;
+            const string invalidInputMessage = "Invalid input. Please enter y or n next time.";
             var numberOfFilesNotDisplayed = files.Count - maxToDisplay;
 
             var filesToDisplay = files
@@ -80,26 +81,21 @@ namespace PlayWithCSharpAOT
             Console.WriteLine();
 
             Console.Write("Do you want to proceed? (y/n) ");
-            var keyPressed = Console.ReadKey();
-            Console.WriteLine();
+            var userInput = Console.ReadLine();
             Console.WriteLine();
 
-            int response;
-            bool responseIsInt = int.TryParse(keyPressed.Key.ToString(), out response);
+            if (userInput.Length != 1
+                || (!userInput.First().ToString().ToLower().Equals("n")
+                    && !userInput.First().ToString().ToLower().Equals("y")))
+            {
+                Console.WriteLine(invalidInputMessage);
+                Environment.Exit(1);
+            }
 
-            if ((responseIsInt && response == 78)
-                    || (!responseIsInt && keyPressed.Key.ToString().ToLower().Equals("n")))
+            if (userInput.First().ToString().ToLower().Equals("n"))
             {
                 Console.WriteLine("Ok, bye!");
                 Environment.Exit(0);
-            }
-
-            if ((responseIsInt && response != 89)
-                    || (!responseIsInt && !keyPressed.Key.ToString().ToLower().Equals("y")))
-            {
-                Console.WriteLine(keyPressed.Key.ToString().ToLower());
-                Console.WriteLine("Unrecognized response. Follow the instructions next time!");
-                Environment.Exit(1);
             }
         }
 
