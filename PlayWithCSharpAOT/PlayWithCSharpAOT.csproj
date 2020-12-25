@@ -3,12 +3,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <InvariantGlobalization>true</InvariantGlobalization>
     <RootAllApplicationAssemblies>false</RootAllApplicationAssemblies>
+    <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+    <IlcDisableReflection>true</IlcDisableReflection>
     <IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-    <IlcDisableReflection>true</IlcDisableReflection>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
