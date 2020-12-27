@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace RandoCat
 {
@@ -12,7 +13,31 @@ namespace RandoCat
         static async Task Main(string[] args)
         {
             await SendRequest();
-            Process.Start(new ProcessStartInfo() { FileName = "https://swapi.dev/api/people/1/", UseShellExecute = true, });
+
+            const string url = "https://swapi.dev/api/people/1/";
+
+            string commandToStart;
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                commandToStart = "xdg-open";
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                commandToStart = "open";
+            }
+            else
+            {
+                // assuming OS is Windows
+                commandToStart = "explorer";
+            }
+
+            if (commandToStart == null)
+            {
+                throw new Exception("Unsupported OS. Must be one of [Linux, OSX, Windows]");
+            }
+
+            Process.Start(new ProcessStartInfo(commandToStart, url) { RedirectStandardOutput = true, RedirectStandardError = true, });
         }
 
         private static async Task SendRequest()
