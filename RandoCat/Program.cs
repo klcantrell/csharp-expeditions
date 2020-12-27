@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace RandoCat
         static async Task Main(string[] args)
         {
             await SendRequest();
+            Process.Start(new ProcessStartInfo() { FileName = "https://swapi.dev/api/people/1/", UseShellExecute = true, });
         }
 
         private static async Task SendRequest()
