@@ -20,6 +20,17 @@ export class AccountService {
       map((user) => {
         localStorage.setItem('user', JSON.stringify(user));
         this.setCurrentUser(user);
+        return user;
+      })
+    );
+  }
+
+  register(model: LoginParams) {
+    return this.http.post<User>(`${this.baseUrl}/account/register`, model).pipe(
+      map((user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.setCurrentUser(user);
+        return user;
       })
     );
   }
