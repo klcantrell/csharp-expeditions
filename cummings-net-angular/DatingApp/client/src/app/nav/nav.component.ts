@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+
 import { AccountService } from '../services/account.service';
 import { LoginParams } from '../_models/loginParams';
 
@@ -14,16 +16,18 @@ export class NavComponent implements OnInit {
     password: '',
   }
 
-  constructor(public accountService: AccountService) {}
+  constructor(public accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
   }
 
-  login() {
-    firstValueFrom(this.accountService.login(this.model));
+  async login() {
+    await firstValueFrom(this.accountService.login(this.model));
+    this.router.navigateByUrl('/members');
   }
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl('/');
   }
 }
