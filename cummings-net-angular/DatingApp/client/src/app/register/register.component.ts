@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../services/account.service';
 
 import { LoginParams } from '../_models/loginParams';
@@ -16,17 +17,21 @@ export class RegisterComponent implements OnInit {
     password: '',
   };
 
-  constructor(private accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private toastrService: ToastrService,
+  ) {}
 
   ngOnInit(): void {}
 
   register() {
     this.accountService.register(this.model).subscribe({
-      next: (response) => {
-        console.log(response);
+      complete: () => {
         this.cancel();
       },
-      error: (error) => console.log(error),
+      error: () => {
+        this.toastrService.error('Something went wrong registering you. Please try again.');
+      }
     });
   }
 
