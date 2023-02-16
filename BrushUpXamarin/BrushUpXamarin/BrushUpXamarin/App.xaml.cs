@@ -1,7 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using BrushUpXamarin.Services;
 using BrushUpXamarin.Views;
 
 namespace BrushUpXamarin
@@ -9,23 +8,21 @@ namespace BrushUpXamarin
     public partial class App : Application
     {
 
-        public App ()
+        public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
-        protected override void OnStart ()
+        protected override void OnStart()
         {
         }
 
-        protected override void OnSleep ()
+        protected override void OnSleep()
         {
         }
 
-        protected override void OnResume ()
+        protected override void OnResume()
         {
         }
     }
