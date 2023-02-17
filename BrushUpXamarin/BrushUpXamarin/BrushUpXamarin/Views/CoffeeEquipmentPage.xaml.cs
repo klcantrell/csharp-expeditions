@@ -2,22 +2,41 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace BrushUpXamarin.Views
 {
     public partial class CoffeeEquipmentPage : ContentPage
     {
-        int count = 0;
-
         public CoffeeEquipmentPage()
         {
             InitializeComponent();
         }
 
+        int count = 0;
+
+        string countDisplay = "Click the button below!";
+        public string CountDisplay
+        {
+            get => countDisplay;
+            set
+            {
+                if (value == countDisplay)
+                {
+                    return;
+                }
+                else
+                {
+                    countDisplay = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         void ButtonClick_Clicked(object sender, EventArgs e)
         {
             count += 1;
-            LabelCount.Text = $"You clicked {count} time(s)";
+            CountDisplay = $"You clicked {count} time(s)";
         }
     }
 }

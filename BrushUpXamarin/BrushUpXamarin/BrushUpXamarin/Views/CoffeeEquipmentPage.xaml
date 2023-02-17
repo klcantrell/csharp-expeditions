@@ -2,14 +2,17 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="BrushUpXamarin.Views.CoffeeEquipmentPage">
+    x:Class="BrushUpXamarin.Views.CoffeeEquipmentPage"
+    xmlns:local="clr-namespace:BrushUpXamarin.Views"
+    x:DataType="local:CoffeeEquipmentPage"
+    BindingContext="{Binding Source={RelativeSource Self}}">
     <Grid RowDefinitions="*,Auto,Auto,*">
         <Label
             x:Name="LabelCount"
             Grid.Row="1"
 			HorizontalOptions="Center"
             FontSize="Large"
-			Text="Click the button below!"
+			Text="{Binding CountDisplay}"
 		/>
         <Button
             x:Name="ButtonClick"
