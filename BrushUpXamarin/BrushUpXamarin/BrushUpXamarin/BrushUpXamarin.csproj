@@ -8,12 +8,14 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ViewModels\" />
     <None Remove="Models\" />
     <None Remove="Services\" />
     <None Remove="Views\" />
+    <None Remove="Refractored.MvvmHelpers" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
