@@ -11,17 +11,55 @@
     </ContentPage.BindingContext>
 
     <ListView
+        ItemSelected="ListView_ItemSelected"
+        ItemTapped="ListView_ItemTapped"
+        CachingStrategy="RecycleElement"
 	    BackgroundColor="Transparent"
-        ItemsSource="{Binding Coffee}"
+        ItemsSource="{Binding CoffeeGroups}"
+        IsGroupingEnabled="True"
+        GroupDisplayBinding="{Binding Key}"
+        HasUnevenRows="True"
+        SeparatorVisibility="None"
+        IsPullToRefreshEnabled="True"
+        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+        RefreshCommand="{Binding RefreshCommand}"
+        RefreshControlColor="Red"
 	>
         <ListView.ItemTemplate>
-            <DataTemplate>
-                <ImageCell
-                    x:DataType="models:Coffee"
-		            Text="{Binding Name}"
-                    Detail="{Binding Roaster}"
-                    ImageSource="{Binding Image}"
-		        />
+            <DataTemplate x:DataType="models:Coffee">
+                <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Text="Favorite" Clicked="MenuItem_Clicked" />
+                        <MenuItem Text="Delete" IsDestructive="True" Clicked="MenuItem_Clicked" />
+		            </ViewCell.ContextActions>
+
+                    <Grid Padding="10">
+                        <Frame
+			                CornerRadius="20"
+			                HasShadow="True"
+			            >
+                            <StackLayout Orientation="Horizontal">
+                                <Image
+				                    Source="{Binding Image}"
+                                    HeightRequest="100"
+				                />
+
+                                <StackLayout VerticalOptions="Center">
+                                    <Label
+								        FontSize="Large"
+									    VerticalOptions="Center"
+									    Text="{Binding Name}"
+							        />
+                                    <Label
+								        FontSize="Large"
+									    VerticalOptions="Center"
+									    Text="{Binding Roaster}"
+							        />
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

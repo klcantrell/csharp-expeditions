@@ -24,11 +24,20 @@ namespace BrushUpXamarin.ViewModels
             var image = "https://images.prismic.io/yesplz/75c1e42d-4bcc-40e1-abec-bf35816c088b_Group+2471.png";
 
             Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Party Round", Image = image });
+            Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Party Round", Image = image });
+            Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Party Round", Image = image });
+            Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Party Round", Image = image });
+            Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Party Round", Image = image });
+            Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Party Round", Image = image });
+            Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Party Round", Image = image });
+            Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Party Round", Image = image });
             Coffee.Add(new Coffee { Roaster = "Yes Plz", Name = "Ignacio Quintero", Image = image });
-            Coffee.Add(new Coffee { Roaster = "Blue Bottle", Name = "Giant Steps", Image = image });
+            Coffee.Add(new Coffee { Roaster = "Blue Bottle", Name = "Giant Steps 10 9-8-7-6-5-4-3-2-1", Image = image });
 
-            CoffeeGroups.Add(new Grouping<string, Coffee>("Yes Plz", Coffee.Take(2)));
+            CoffeeGroups.Add(new Grouping<string, Coffee>("Yes Plz", Coffee.Where((c) => c.Roaster == "Yes Plz")));
             CoffeeGroups.Add(new Grouping<string, Coffee>("Blue Bottle", Coffee.Where((c) => c.Roaster == "Blue Bottle")));
+
+            RefreshCommand = new AsyncCommand(Refresh);
         }
 
         async Task Refresh()
