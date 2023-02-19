@@ -3,23 +3,26 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="BrushUpXamarin.Views.CoffeeEquipmentPage"
+    xmlns:models="clr-namespace:BrushUpXamarin.Models"
     xmlns:viewModels="clr-namespace:BrushUpXamarin.ViewModels"
     x:DataType="viewModels:CoffeeEquipmentViewModel">
     <ContentPage.BindingContext>
         <viewModels:CoffeeEquipmentViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="*,Auto,Auto,*">
-        <Label
-            Grid.Row="1"
-			HorizontalOptions="Center"
-            FontSize="Large"
-			Text="{Binding CountDisplay}"
-		/>
-        <Button
-            Command="{Binding IncreaseCount}"
-            Grid.Row="2"
-	        Text="Click Me"
-		/>
-    </Grid>
+    <ListView
+	    BackgroundColor="Transparent"
+        ItemsSource="{Binding Coffee}"
+	>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ImageCell
+                    x:DataType="models:Coffee"
+		            Text="{Binding Name}"
+                    Detail="{Binding Roaster}"
+                    ImageSource="{Binding Image}"
+		        />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>
