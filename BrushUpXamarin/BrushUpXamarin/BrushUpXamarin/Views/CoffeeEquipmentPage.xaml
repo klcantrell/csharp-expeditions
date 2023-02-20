@@ -5,14 +5,14 @@
     x:Class="BrushUpXamarin.Views.CoffeeEquipmentPage"
     xmlns:models="clr-namespace:BrushUpXamarin.Models"
     xmlns:viewModels="clr-namespace:BrushUpXamarin.ViewModels"
-    x:DataType="viewModels:CoffeeEquipmentViewModel">
+    x:DataType="viewModels:CoffeeEquipmentViewModel"
+    x:Name="CoffeePage">
     <ContentPage.BindingContext>
         <viewModels:CoffeeEquipmentViewModel />
     </ContentPage.BindingContext>
 
     <ListView
-        ItemSelected="ListView_ItemSelected"
-        ItemTapped="ListView_ItemTapped"
+        SelectedItem="{Binding SelectedCoffee, Mode=TwoWay}"
         CachingStrategy="RecycleElement"
 	    BackgroundColor="Transparent"
         ItemsSource="{Binding CoffeeGroups}"
@@ -29,9 +29,18 @@
             <DataTemplate x:DataType="models:Coffee">
                 <ViewCell>
                     <ViewCell.ContextActions>
-                        <MenuItem Text="Favorite" Clicked="MenuItem_Clicked" />
-                        <MenuItem Text="Delete" IsDestructive="True" Clicked="MenuItem_Clicked" />
-		            </ViewCell.ContextActions>
+                        <MenuItem
+			                Text="Favorite"
+			                Command="{Binding Source={x:Reference CoffeePage},Path=BindingContext.FavoriteCommand}"
+				            CommandParameter="{Binding .}"
+			            />
+                        <MenuItem
+			                Text="Delete"
+			                IsDestructive="True"
+			                Command="{Binding Source={x:Reference CoffeePage},Path=BindingContext.DeleteCommand}"
+				            CommandParameter="{Binding .}"
+			            />
+                    </ViewCell.ContextActions>
 
                     <Grid Padding="10">
                         <Frame

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using BrushUpXamarin.Models;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
+using Xamarin.Forms;
 
 namespace BrushUpXamarin.ViewModels
 {
@@ -12,7 +11,12 @@ namespace BrushUpXamarin.ViewModels
     {
         public ObservableRangeCollection<Coffee> Coffee { get; set; }
         public ObservableRangeCollection<Grouping<string, Coffee>> CoffeeGroups { get; set; }
+
         public AsyncCommand RefreshCommand { get; }
+
+        public AsyncCommand<Coffee> FavoriteCommand { get; }
+
+        public AsyncCommand<Coffee> DeleteCommand { get; }
 
         public CoffeeEquipmentViewModel()
         {
@@ -38,6 +42,43 @@ namespace BrushUpXamarin.ViewModels
             CoffeeGroups.Add(new Grouping<string, Coffee>("Blue Bottle", Coffee.Where((c) => c.Roaster == "Blue Bottle")));
 
             RefreshCommand = new AsyncCommand(Refresh);
+            FavoriteCommand = new AsyncCommand<Coffee>(Favorite);
+            DeleteCommand = new AsyncCommand<Coffee>(Delete);
+        }
+
+        Coffee selectedCoffee;
+        public Coffee SelectedCoffee
+        {
+            get => selectedCoffee;
+            set
+            {
+                if (value != null)
+                {
+                    Application.Current.MainPage.DisplayAlert("Selected", value.Name, "OK");
+                    value = null;
+                }
+
+                selectedCoffee = value;
+                OnPropertyChanged();
+            }
+        }
+
+        async Task Favorite(Coffee coffee)
+        {
+            if (coffee == null)
+            {
+                return;
+            }
+            await Application.Current.MainPage.DisplayAlert("Favorite", coffee.Name, "OK");
+        }
+
+        async Task Delete(Coffee coffee)
+        {
+            if (coffee == null)
+            {
+                return;
+            }
+            await Application.Current.MainPage.DisplayAlert("Delete", coffee.Name, "OK");
         }
 
         async Task Refresh()

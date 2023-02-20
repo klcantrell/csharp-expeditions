@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BrushUpXamarin.Views;
-using Xamarin.Forms;
-
-namespace BrushUpXamarin
+﻿namespace BrushUpXamarin
 {
     public partial class AppShell : Xamarin.Forms.Shell
     {

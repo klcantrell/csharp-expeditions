@@ -1,5 +1,4 @@
-﻿using System;
-namespace BrushUpXamarin.Models
+﻿namespace BrushUpXamarin.Models
 {
     public class Coffee
     {
