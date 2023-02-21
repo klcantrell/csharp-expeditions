@@ -71,5 +71,26 @@
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
+        <ListView.Header>
+            <StackLayout Orientation="Horizontal">
+                <Label
+                    HorizontalOptions="Center"
+                    Text="Coffee of the world"
+		        />
+	        </StackLayout>
+	    </ListView.Header>
+        <ListView.Footer>
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Button
+                    Command="{Binding LoadMoreCommand}"
+                    Text="Load More"
+                    Margin="0, 0, 10, 0"
+		        />
+                <Button
+                    Command="{Binding ClearCommand}"
+                    Text="Clear"
+		        />
+	        </StackLayout>
+	    </ListView.Footer>
     </ListView>
 </ContentPage>
